@@ -1,10 +1,10 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { EvervaultCard } from "@/components/ui/evervault-card";
 import { GlowingCard } from "@/components/ui/glowing-card";
 import { SparklesCore } from "@/components/ui/sparkles";
-import { ExternalLink, Github, Filter } from "lucide-react";
+import { ExternalLink, Github, Filter, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 
 const allProjects = [
@@ -105,6 +105,10 @@ export default function ProjectsSection() {
   const [isDragging, setIsDragging] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [dragStart, setDragStart] = useState({ x: 0, scrollLeft: 0 });
+  const [momentum, setMomentum] = useState(0);
+  const animationRef = useRef<number | null>(null);
+  const lastMoveTimeRef = useRef(0);
+  const velocityRef = useRef(0);
 
   const filteredProjects = allProjects.filter(project => {
     if (selectedCategory === "All") return true;
@@ -112,52 +116,143 @@ export default function ProjectsSection() {
     return project.category === selectedCategory;
   });
 
+  // Cleanup animation frame on unmount
+  useEffect(() => {
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, []);
+
+  // Smooth scroll with momentum
+  const applyMomentum = () => {
+    if (!scrollContainerRef.current || Math.abs(momentum) < 0.1) {
+      setMomentum(0);
+      return;
+    }
+
+    scrollContainerRef.current.scrollLeft += momentum;
+    setMomentum(momentum * 0.95); // Decay factor
+    animationRef.current = requestAnimationFrame(applyMomentum);
+  };
+
   const handleMouseDown = (e: React.MouseEvent) => {
     if (scrollContainerRef.current) {
       setIsDragging(true);
+      setMomentum(0);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
       setDragStart({
-        x: e.pageX - scrollContainerRef.current.offsetLeft,
+        x: e.pageX,
         scrollLeft: scrollContainerRef.current.scrollLeft,
       });
+      lastMoveTimeRef.current = Date.now();
+      velocityRef.current = 0;
     }
   };
 
   const handleMouseLeave = () => {
-    setIsDragging(false);
+    if (isDragging) {
+      setIsDragging(false);
+      setMomentum(velocityRef.current * 10); // Apply momentum
+      animationRef.current = requestAnimationFrame(applyMomentum);
+    }
   };
 
   const handleMouseUp = () => {
-    setIsDragging(false);
+    if (isDragging) {
+      setIsDragging(false);
+      setMomentum(velocityRef.current * 10); // Apply momentum
+      animationRef.current = requestAnimationFrame(applyMomentum);
+    }
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDragging || !scrollContainerRef.current) return;
     e.preventDefault();
-    const x = e.pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - dragStart.x) * 2; // Scroll speed multiplier
-    scrollContainerRef.current.scrollLeft = dragStart.scrollLeft - walk;
+    
+    const currentTime = Date.now();
+    const deltaTime = currentTime - lastMoveTimeRef.current;
+    const x = e.pageX;
+    const deltaX = x - dragStart.x;
+    const newScrollLeft = dragStart.scrollLeft - deltaX;
+    
+    // Calculate velocity for momentum
+    if (deltaTime > 0) {
+      velocityRef.current = (scrollContainerRef.current.scrollLeft - newScrollLeft) / deltaTime;
+    }
+    
+    scrollContainerRef.current.scrollLeft = newScrollLeft;
+    lastMoveTimeRef.current = currentTime;
   };
 
   // Touch events for mobile
   const handleTouchStart = (e: React.TouchEvent) => {
     if (scrollContainerRef.current) {
       setIsDragging(true);
+      setMomentum(0);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
       setDragStart({
-        x: e.touches[0].pageX - scrollContainerRef.current.offsetLeft,
+        x: e.touches[0].pageX,
         scrollLeft: scrollContainerRef.current.scrollLeft,
       });
+      lastMoveTimeRef.current = Date.now();
+      velocityRef.current = 0;
     }
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!isDragging || !scrollContainerRef.current) return;
-    const x = e.touches[0].pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - dragStart.x) * 2;
-    scrollContainerRef.current.scrollLeft = dragStart.scrollLeft - walk;
+    e.preventDefault();
+    
+    const currentTime = Date.now();
+    const deltaTime = currentTime - lastMoveTimeRef.current;
+    const x = e.touches[0].pageX;
+    const deltaX = x - dragStart.x;
+    const newScrollLeft = dragStart.scrollLeft - deltaX;
+    
+    // Calculate velocity for momentum
+    if (deltaTime > 0) {
+      velocityRef.current = (scrollContainerRef.current.scrollLeft - newScrollLeft) / deltaTime;
+    }
+    
+    scrollContainerRef.current.scrollLeft = newScrollLeft;
+    lastMoveTimeRef.current = currentTime;
   };
 
   const handleTouchEnd = () => {
-    setIsDragging(false);
+    if (isDragging) {
+      setIsDragging(false);
+      setMomentum(velocityRef.current * 10); // Apply momentum
+      animationRef.current = requestAnimationFrame(applyMomentum);
+    }
+  };
+
+  // Arrow navigation functions
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      const cardWidth = 360; // Width of each card + gap
+      const scrollAmount = cardWidth + 16; // Card width + gap
+      scrollContainerRef.current.scrollBy({ 
+        left: -scrollAmount, 
+        behavior: 'smooth' 
+      });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      const cardWidth = 360; // Width of each card + gap
+      const scrollAmount = cardWidth + 16; // Card width + gap
+      scrollContainerRef.current.scrollBy({ 
+        left: scrollAmount, 
+        behavior: 'smooth' 
+      });
+    }
   };
 
   return (
@@ -242,9 +337,13 @@ export default function ProjectsSection() {
             <motion.div 
               key={selectedCategory}
               ref={scrollContainerRef}
-              className={`flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth px-4 py-4 ${
+              className={`flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth px-4 py-4 will-change-scroll ${
                 isDragging ? 'cursor-grabbing select-none' : 'cursor-grab'
               }`}
+              style={{
+                scrollBehavior: isDragging ? 'auto' : 'smooth',
+                WebkitOverflowScrolling: 'touch',
+              }}
               onMouseDown={handleMouseDown}
               onMouseLeave={handleMouseLeave}
               onMouseUp={handleMouseUp}
@@ -268,13 +367,14 @@ export default function ProjectsSection() {
                     type: "spring",
                     stiffness: 100 
                   }}
-                  className="flex-shrink-0 w-[400px] h-[500px]"
+                  className="flex-shrink-0 w-[360px] h-[370px] p-2"
+                  style={{ minWidth: '360px', maxWidth: '360px' }}
                 >
                   <GlowingCard 
-                    className="h-full"
+                    className="h-full w-full"
                     glowColor={project.featured ? "rgba(139, 92, 246, 0.5)" : "rgba(59, 130, 246, 0.3)"}
                   >
-                    <div className="group relative bg-gray-900/50 border border-gray-800 rounded-2xl overflow-hidden hover:border-gray-600 transition-all duration-300 h-full">
+                    <div className="group relative bg-gray-900/50 border border-gray-800 rounded-2xl overflow-hidden hover:border-gray-600 transition-all duration-300 h-full w-full">
                       {/* Featured Badge */}
                       {project.featured && (
                         <div className="absolute top-4 right-4 z-10 bg-white text-black px-3 py-1 rounded-full text-xs font-medium">
@@ -283,7 +383,7 @@ export default function ProjectsSection() {
                       )}
 
                   {/* Project Image */}
-                  <div className="relative h-48 overflow-hidden">
+                  <div className="relative h-40 overflow-hidden">
                     <Image
                       src={project.image}
                       alt={project.title}
@@ -299,48 +399,50 @@ export default function ProjectsSection() {
                   </div>
 
                   {/* Project Content */}
-                  <div className="p-6 flex flex-col h-full">
-                    <div className="flex items-center justify-between mb-3">
-                      <h3 className="text-xl font-bold text-white group-hover:text-gray-200 transition-colors line-clamp-2">
-                        {project.title}
-                      </h3>
-                      <span className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded-full whitespace-nowrap ml-2">
-                        {project.category}
-                      </span>
-                    </div>
-                    
-                    <p className="text-gray-400 text-sm leading-relaxed mb-4 flex-grow line-clamp-3">
-                      {project.description}
-                    </p>
+                  <div className="p-4 flex flex-col justify-between" style={{ height: 'calc(100% - 160px)' }}>
+                    <div>
+                      <div className="flex items-start justify-between mb-2">
+                        <h3 className="text-lg font-bold text-white group-hover:text-gray-200 transition-colors line-clamp-2 flex-1">
+                          {project.title}
+                        </h3>
+                        <span className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded-full whitespace-nowrap ml-2 flex-shrink-0">
+                          {project.category}
+                        </span>
+                      </div>
+                      
+                      <p className="text-gray-400 text-sm leading-relaxed mb-3 line-clamp-2">
+                        {project.description}
+                      </p>
 
-                    {/* Technologies */}
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {project.technologies.slice(0, 3).map((tech, techIndex) => (
-                        <span
-                          key={techIndex}
-                          className="px-2 py-1 text-xs bg-gray-800 text-gray-300 rounded-full border border-gray-700"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                      {project.technologies.length > 3 && (
-                        <span className="px-2 py-1 text-xs bg-gray-700 text-gray-400 rounded-full border border-gray-600">
-                          +{project.technologies.length - 3}
-                        </span>
-                      )}
+                      {/* Technologies */}
+                      <div className="flex flex-wrap gap-1 mb-4">
+                        {project.technologies.slice(0, 3).map((tech, techIndex) => (
+                          <span
+                            key={techIndex}
+                            className="px-2 py-1 text-xs bg-gray-800 text-gray-300 rounded-full border border-gray-700"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                        {project.technologies.length > 3 && (
+                          <span className="px-2 py-1 text-xs bg-gray-700 text-gray-400 rounded-full border border-gray-600">
+                            +{project.technologies.length - 3}
+                          </span>
+                        )}
+                      </div>
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="flex gap-3 mt-auto">
+                    <div className="flex gap-2 mt-auto">
                       <motion.a
                         href={project.demo}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-3 py-2 bg-white text-black rounded-lg font-medium hover:bg-gray-200 transition-colors duration-300 text-sm flex-1 justify-center"
+                        className="flex items-center gap-1 px-3 py-2 bg-white text-black rounded-lg font-medium hover:bg-gray-200 transition-colors duration-300 text-sm flex-1 justify-center"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
-                        <ExternalLink size={14} />
+                        <ExternalLink size={12} />
                         Demo
                       </motion.a>
                       
@@ -348,11 +450,11 @@ export default function ProjectsSection() {
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-3 py-2 border border-gray-600 text-gray-300 rounded-lg hover:border-gray-500 hover:text-white transition-colors duration-300 text-sm flex-1 justify-center"
+                        className="flex items-center gap-1 px-3 py-2 border border-gray-600 text-gray-300 rounded-lg hover:border-gray-500 hover:text-white transition-colors duration-300 text-sm flex-1 justify-center"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
-                        <Github size={14} />
+                        <Github size={12} />
                         Code
                       </motion.a>
                     </div>
@@ -364,22 +466,43 @@ export default function ProjectsSection() {
             </motion.div>
           </AnimatePresence>
 
-          {/* Scroll Indicator */}
+          {/* Arrow Navigation */}
           <motion.div 
-            className="flex justify-center mt-8 gap-2"
+            className="flex justify-center items-center mt-8 gap-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.5 }}
             viewport={{ once: true }}
           >
-            <div className="text-gray-500 text-sm flex items-center gap-2">
-              <span>Drag to scroll or use mouse wheel</span>
+            {/* Left Arrow */}
+            <motion.button
+              onClick={scrollLeft}
+              className="p-3 rounded-full bg-gray-900/50 border border-gray-800 hover:border-gray-600 hover:bg-gray-800/50 transition-all duration-300 group"
+              whileHover={{ scale: 1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <ChevronLeft className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors duration-300" />
+            </motion.button>
+
+            {/* Center Indicator */}
+            <div className="text-gray-500 text-sm flex items-center gap-2 px-4">
+              <span>Drag to scroll or use arrows</span>
               <div className="flex gap-1">
                 <div className="w-2 h-2 bg-gray-600 rounded-full animate-pulse"></div>
                 <div className="w-2 h-2 bg-gray-600 rounded-full animate-pulse delay-100"></div>
                 <div className="w-2 h-2 bg-gray-600 rounded-full animate-pulse delay-200"></div>
               </div>
             </div>
+
+            {/* Right Arrow */}
+            <motion.button
+              onClick={scrollRight}
+              className="p-3 rounded-full bg-gray-900/50 border border-gray-800 hover:border-gray-600 hover:bg-gray-800/50 transition-all duration-300 group"
+              whileHover={{ scale: 1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors duration-300" />
+            </motion.button>
           </motion.div>
         </div>
       </div>

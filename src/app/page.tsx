@@ -29,13 +29,9 @@ export default function Home() {
     <main className="relative bg-black min-h-screen w-full overflow-x-hidden">
       <FloatingNav navItems={navItems} />
       <HeroSection />
-      
-      {/* TracingBeam untuk sections setelah hero */}
-      <TracingBeam className="w-full overflow-x-hidden">
         <SkillsSection />
         <ProjectsSection />
         <ContactSection />
-      </TracingBeam>
     </main>
   );
 }
