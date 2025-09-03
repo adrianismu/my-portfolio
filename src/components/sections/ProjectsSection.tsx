@@ -2,6 +2,8 @@
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { EvervaultCard } from "@/components/ui/evervault-card";
+import { GlowingCard } from "@/components/ui/glowing-card";
+import { SparklesCore } from "@/components/ui/sparkles";
 import { ExternalLink, Github, Filter } from "lucide-react";
 import Image from "next/image";
 
@@ -159,9 +161,21 @@ export default function ProjectsSection() {
   };
 
   return (
-    <section id="projects" className="py-20 bg-black overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+    <section id="projects" className="py-20 bg-black overflow-hidden relative w-full min-h-screen">
+      {/* Sparkles Background */}
+      <div className="absolute inset-0">
+        <SparklesCore
+          background="transparent"
+          minSize={0.4}
+          maxSize={1.0}
+          particleDensity={50}
+          className="w-full h-full"
+          particleColor="#8b5cf6"
+        />
+      </div>
+      
+      <div className="w-full px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-16 max-w-7xl mx-auto">
           <motion.h2 
             className="text-4xl md:text-6xl font-bold text-white mb-4"
             initial={{ opacity: 0, y: 20 }}
@@ -222,7 +236,7 @@ export default function ProjectsSection() {
         </div>
         
         {/* Horizontal Scroll Container */}
-        <div className="relative">
+        <div className="relative overflow-hidden">
           {/* Projects Horizontal Scroll */}
           <AnimatePresence mode="wait">
             <motion.div 
@@ -254,14 +268,19 @@ export default function ProjectsSection() {
                     type: "spring",
                     stiffness: 100 
                   }}
-                  className="group relative bg-gray-900/50 border border-gray-800 rounded-2xl overflow-hidden hover:border-gray-600 transition-all duration-300 flex-shrink-0 w-[400px] h-[500px]"
+                  className="flex-shrink-0 w-[400px] h-[500px]"
                 >
-                  {/* Featured Badge */}
-                  {project.featured && (
-                    <div className="absolute top-4 right-4 z-10 bg-white text-black px-3 py-1 rounded-full text-xs font-medium">
-                      Featured
-                    </div>
-                  )}
+                  <GlowingCard 
+                    className="h-full"
+                    glowColor={project.featured ? "rgba(139, 92, 246, 0.5)" : "rgba(59, 130, 246, 0.3)"}
+                  >
+                    <div className="group relative bg-gray-900/50 border border-gray-800 rounded-2xl overflow-hidden hover:border-gray-600 transition-all duration-300 h-full">
+                      {/* Featured Badge */}
+                      {project.featured && (
+                        <div className="absolute top-4 right-4 z-10 bg-white text-black px-3 py-1 rounded-full text-xs font-medium">
+                          Featured
+                        </div>
+                      )}
 
                   {/* Project Image */}
                   <div className="relative h-48 overflow-hidden">
@@ -338,7 +357,9 @@ export default function ProjectsSection() {
                       </motion.a>
                     </div>
                   </div>
-                </motion.div>
+                </div>
+              </GlowingCard>
+            </motion.div>
               ))}
             </motion.div>
           </AnimatePresence>

@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { BackgroundBeams } from "@/components/ui/background-beams";
+import { SparklesCore } from "@/components/ui/sparkles";
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -65,11 +66,23 @@ export default function ContactSection() {
   ];
 
   return (
-    <section id="contact" className="relative py-20 bg-black overflow-hidden">
+    <section id="contact" className="relative py-20 bg-black overflow-hidden w-full min-h-screen">
       <BackgroundBeams className="absolute inset-0" />
       
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+      {/* Sparkles Background */}
+      <div className="absolute inset-0">
+        <SparklesCore
+          background="transparent"
+          minSize={0.4}
+          maxSize={1.2}
+          particleDensity={60}
+          className="w-full h-full"
+          particleColor="#06b6d4"
+        />
+      </div>
+      
+      <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16 max-w-7xl mx-auto">
           <motion.h2 
             className="text-4xl md:text-6xl font-bold text-white mb-4"
             initial={{ opacity: 0, y: 20 }}
@@ -90,7 +103,7 @@ export default function ContactSection() {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-7xl mx-auto">
           {/* Contact Information */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}

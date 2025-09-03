@@ -3,6 +3,8 @@
 import { Spotlight } from "@/components/ui/spotlight";
 import { TypewriterEffect } from "@/components/ui/typewriter-effect";
 import { MagicButton } from "@/components/ui/magic-button";
+import { WavyBackground } from "@/components/ui/wavy-background";
+import { SparklesCore } from "@/components/ui/sparkles";
 import { ChevronDown } from "lucide-react";
 
 export default function HeroSection() {
@@ -33,7 +35,30 @@ export default function HeroSection() {
   };
 
   return (
-    <section id="home" className="relative h-screen w-full flex items-center justify-center">
+    <section id="home" className="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
+      {/* Wavy Background */}
+      <WavyBackground 
+        className="absolute inset-0"
+        backgroundFill="black"
+        colors={["#1e40af", "#3b82f6", "#60a5fa", "#93c5fd"]}
+        waveWidth={50}
+        blur={10}
+        speed="fast"
+        waveOpacity={0.5}
+      />
+      
+      {/* Sparkles Effect */}
+      <div className="absolute inset-0">
+        <SparklesCore
+          background="transparent"
+          minSize={0.4}
+          maxSize={1.4}
+          particleDensity={120}
+          className="w-full h-full"
+          particleColor="#3b82f6"
+        />
+      </div>
+
       {/* Spotlight Background */}
       <Spotlight
         className="-top-40 -left-10 md:-left-32 md:-top-20 h-screen"
@@ -48,11 +73,8 @@ export default function HeroSection() {
         fill="blue"
       />
 
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/20" />
-
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center text-center px-4">
+      <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 w-full max-w-7xl mx-auto">
         <h1 className="text-4xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50">
           Halo, Saya John Doe
         </h1>

@@ -1,4 +1,5 @@
 import { FloatingNav } from "@/components/ui/floating-navbar";
+import { TracingBeam } from "@/components/ui/tracing-beam";
 import HeroSection from "@/components/sections/HeroSection";
 import SkillsSection from "@/components/sections/SkillsSection";
 import ProjectsSection from "@/components/sections/ProjectsSection";
@@ -25,14 +26,16 @@ const navItems = [
 
 export default function Home() {
   return (
-    <main className="relative bg-black flex justify-center items-center flex-col overflow-hidden mx-auto sm:px-10 px-5">
-      <div className="max-w-7xl w-full">
-        <FloatingNav navItems={navItems} />
-        <HeroSection />
+    <main className="relative bg-black min-h-screen w-full overflow-x-hidden">
+      <FloatingNav navItems={navItems} />
+      <HeroSection />
+      
+      {/* TracingBeam untuk sections setelah hero */}
+      <TracingBeam className="w-full overflow-x-hidden">
         <SkillsSection />
         <ProjectsSection />
         <ContactSection />
-      </div>
+      </TracingBeam>
     </main>
   );
 }

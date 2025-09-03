@@ -21,6 +21,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { SparklesCore } from "@/components/ui/sparkles";
 
 const skills = [
   { icon: SiReact, name: "React", color: "#61DAFB" },
@@ -39,9 +40,21 @@ const skills = [
 
 export default function SkillsSection() {
   return (
-    <section className="py-20 bg-black" id="skills">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+    <section className="py-20 bg-black relative overflow-hidden w-full min-h-screen flex items-center" id="skills">
+      {/* Sparkles Background */}
+      <div className="absolute inset-0">
+        <SparklesCore
+          background="transparent"
+          minSize={0.6}
+          maxSize={1.4}
+          particleDensity={80}
+          className="w-full h-full"
+          particleColor="#6366f1"
+        />
+      </div>
+      
+      <div className="w-full px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-16 max-w-7xl mx-auto">
           <motion.h2 
             className="text-4xl md:text-6xl font-bold text-white mb-4"
             initial={{ opacity: 0, y: 20 }}
