@@ -10,20 +10,20 @@ import { ChevronDown } from "lucide-react";
 export default function HeroSection() {
   const words = [
     {
-      text: "Full-Stack",
-    },
-    {
-      text: "Developer",
+      text: "Backend",
+      className: "text-white dark:text-white",
     },
     {
       text: "&",
+      className: "text-white dark:text-white",
     },
     {
-      text: "UI",
+      text: "Software",
+      className: "text-white dark:text-white",
     },
     {
-      text: "Enthusiast",
-      className: "text-blue-500 dark:text-blue-500",
+      text: "Engineer",
+      className: "text-blue-400 dark:text-blue-400",
     },
   ];
 
@@ -47,13 +47,13 @@ export default function HeroSection() {
         waveOpacity={0.5}
       />
       
-      {/* Sparkles Effect */}
+      {/* Sparkles Effect - Reduced particles for performance */}
       <div className="absolute inset-0">
         <SparklesCore
           background="transparent"
           minSize={0.4}
           maxSize={1.4}
-          particleDensity={120}
+          particleDensity={60}
           className="w-full h-full"
           particleColor="#3b82f6"
         />
@@ -75,21 +75,21 @@ export default function HeroSection() {
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 w-full max-w-7xl mx-auto">
-        <h1 className="text-4xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50">
-          Halo, Saya John Doe
+        <h1 className="text-4xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-300">
+          Hi, I&apos;m Adrian Ismu Arifianto
         </h1>
         
-        <div className="mb-8">
-          <TypewriterEffect words={words} />
+        <div className="mb-8 text-white">
+          <TypewriterEffect words={words} className="text-white" />
         </div>
 
-        <p className="text-xl md:text-2xl text-neutral-300 mb-12 max-w-3xl">
-          Saya menciptakan pengalaman digital yang menakjubkan dengan teknologi modern. 
-          Mari berkolaborasi untuk mewujudkan ide Anda menjadi kenyataan.
-        </p>
+        {/* <p className="text-xl md:text-2xl text-neutral-300 mb-12 max-w-3xl">
+          Saya adalah Software Engineer yang berfokus pada pengembangan backend dengan teknologi modern. 
+          Mari berkolaborasi untuk membangun sistem yang scalable dan robust.
+        </p> */}
 
         <MagicButton
-          title="Lihat Proyek Saya"
+          title="View My Projects"
           icon={<ChevronDown size={20} />}
           position="right"
           handleClick={handleScroll}

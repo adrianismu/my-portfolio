@@ -1,9 +1,24 @@
+"use client";
+import dynamic from "next/dynamic";
 import { FloatingNav } from "@/components/ui/floating-navbar";
-import { TracingBeam } from "@/components/ui/tracing-beam";
 import HeroSection from "@/components/sections/HeroSection";
-import SkillsSection from "@/components/sections/SkillsSection";
-import ProjectsSection from "@/components/sections/ProjectsSection";
-import ContactSection from "@/components/sections/ContactSection";
+
+// Lazy load heavy components
+const TracingBeam = dynamic(() => import("@/components/ui/tracing-beam").then(mod => ({ default: mod.TracingBeam })), {
+  loading: () => <div className="w-full h-20" />,
+});
+
+const SkillsSection = dynamic(() => import("@/components/sections/SkillsSection"), {
+  loading: () => <div className="w-full h-screen bg-black" />,
+});
+
+const ProjectsSection = dynamic(() => import("@/components/sections/ProjectsSection"), {
+  loading: () => <div className="w-full h-screen bg-black" />,
+});
+
+const ContactSection = dynamic(() => import("@/components/sections/ContactSection"), {
+  loading: () => <div className="w-full h-screen bg-black" />,
+});
 
 const navItems = [
   {
@@ -29,9 +44,13 @@ export default function Home() {
     <main className="relative bg-black min-h-screen w-full overflow-x-hidden">
       <FloatingNav navItems={navItems} />
       <HeroSection />
+      
+      {/* TracingBeam untuk sections setelah hero */}
+      <TracingBeam className="w-full overflow-x-hidden">
         <SkillsSection />
         <ProjectsSection />
         <ContactSection />
+      </TracingBeam>
     </main>
   );
 }

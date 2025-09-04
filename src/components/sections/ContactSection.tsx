@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { BackgroundBeams } from "@/components/ui/background-beams";
 import { SparklesCore } from "@/components/ui/sparkles";
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
@@ -38,36 +37,35 @@ export default function ContactSection() {
     console.log("Form submitted:", formData);
   };
 
-  const contactInfo = [
-    {
-      icon: Mail,
-      label: "Email",
-      value: "john.doe@example.com",
-      href: "mailto:john.doe@example.com"
-    },
-    {
-      icon: Github,
-      label: "GitHub",
-      value: "@johndoe",
-      href: "https://github.com/johndoe"
-    },
-    {
-      icon: Linkedin,
-      label: "LinkedIn",
-      value: "/in/johndoe",
-      href: "https://linkedin.com/in/johndoe"
-    },
-    {
-      icon: MapPin,
-      label: "Location",
-      value: "Jakarta, Indonesia",
-      href: "#"
-    }
-  ];
+const contactInfo = [
+  {
+    icon: Mail,
+    label: "Email",
+    value: "adrianismu263@gmail.com",
+    href: "mailto:adrianismu263@gmail.com"
+  },
+  {
+    icon: Github,
+    label: "GitHub",
+    value: "adrianismu", // Ganti dengan username GitHub Anda
+    href: "https://github.com/adrianismu" // Ganti dengan URL profil GitHub Anda
+  },
+  {
+    icon: Linkedin,
+    label: "LinkedIn",
+    value: "/in/adrianismu", // Ganti dengan username LinkedIn Anda
+    href: "https://linkedin.com/in/adrianismu" // Ganti dengan URL profil LinkedIn Anda
+  },
+  {
+    icon: MapPin,
+    label: "Location",
+    value: "Surabaya, Indonesia",
+    href: "#"
+  }
+];
 
   return (
     <section id="contact" className="relative py-20 bg-black overflow-hidden w-full min-h-screen">
-      <BackgroundBeams className="absolute inset-0" />
       
       {/* Sparkles Background */}
       <div className="absolute inset-0">
@@ -90,7 +88,7 @@ export default function ContactSection() {
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-            Let's Work Together
+            Let&apos;s Work Together
           </motion.h2>
           <motion.p 
             className="text-lg text-gray-400 max-w-2xl mx-auto"
@@ -99,7 +97,7 @@ export default function ContactSection() {
             transition={{ duration: 0.5, delay: 0.1 }}
             viewport={{ once: true }}
           >
-            Ready to bring your ideas to life? Let's discuss your next project and create something amazing together.
+            Ready to bring your ideas to life? Let&apos;s discuss your next project and create something amazing together.
           </motion.p>
         </div>
 
@@ -115,7 +113,7 @@ export default function ContactSection() {
             <div>
               <h3 className="text-2xl font-bold text-white mb-6">Get in Touch</h3>
               <p className="text-gray-400 mb-8">
-                I'm always interested in new opportunities and exciting projects. 
+                I&apos;m always interested in new opportunities and exciting projects. 
                 Whether you have a question or just want to say hi, feel free to reach out!
               </p>
             </div>

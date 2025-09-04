@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { EvervaultCard } from "@/components/ui/evervault-card";
 import { GlowingCard } from "@/components/ui/glowing-card";
 import { SparklesCore } from "@/components/ui/sparkles";
 import { ExternalLink, Github, Filter, ChevronLeft, ChevronRight } from "lucide-react";
@@ -10,90 +9,68 @@ import Image from "next/image";
 const allProjects = [
   {
     id: 1,
-    title: "E-Commerce Platform",
-    description: "Modern e-commerce platform with full features, integrated payment gateway, and powerful admin dashboard.",
-    image: "/api/placeholder/600/400",
-    demo: "https://example.com",
-    github: "https://github.com/johndoe/ecommerce",
-    technologies: ["Next.js", "TypeScript", "Stripe", "Prisma"],
+    title: "Insightfy",
+    description: "aplikasi web dashboard analitik yang modern dan responsif untuk menganalisis berita terkini dari berbagai sumber media internasional. Aplikasi ini mengintegrasikan data real-time dari NewsAPI.org dan menyajikannya dalam bentuk visualisasi interaktif yang mudah dipahami.",
+    image: "/images/projects/insightfy.png",
+    demo: "#", 
+    github: "https://github.com/adrianismu/insightfy",
+    technologies: ["C#", "TypeScript", "Tailwind CSS"], 
     category: "Web App",
     featured: true,
   },
   {
     id: 2,
-    title: "Task Management App",
-    description: "Task management app with real-time collaboration, drag & drop interface, and push notifications.",
-    image: "/api/placeholder/600/400", 
-    demo: "https://example.com",
-    github: "https://github.com/johndoe/taskapp",
-    technologies: ["React", "Node.js", "Socket.io", "MongoDB"],
+    title: "BurjoAPI",
+    description: "API backend untuk aplikasi mobile kebugaran yang dibangun menggunakan ASP.NET Core 8 dengan Clean Architecture dan Swagger.",
+    image: "/images/projects/burjoapi.png", 
+    demo: "#",
+    github: "https://github.com/adrianismu/BurjoAPI",
+    technologies: ["C#", ".NET Core", "MySQL", "Swagger"], 
     category: "Web App",
     featured: true,
   },
   {
     id: 3,
-    title: "Weather Dashboard",
-    description: "Weather dashboard with interactive data visualization, 7-day forecast, and multiple weather APIs integration.",
-    image: "/api/placeholder/600/400",
-    demo: "https://example.com", 
-    github: "https://github.com/johndoe/weather",
-    technologies: ["Vue.js", "D3.js", "Express", "Redis"],
-    category: "Dashboard",
-    featured: true,
-  },
-  {
-    id: 4,
-    title: "Social Media App",
-    description: "Social media app with real-time chat, story sharing, and intelligent feed algorithm.",
-    image: "/api/placeholder/600/400",
-    demo: "https://example.com",
-    github: "https://github.com/johndoe/social",
-    technologies: ["React Native", "Firebase", "GraphQL", "AWS"],
-    category: "Mobile App",
-    featured: true,
-  },
-  {
-    id: 5,
-    title: "Portfolio Website",
-    description: "Modern portfolio website with dark theme, smooth animations, and responsive design.",
-    image: "/api/placeholder/600/400",
-    demo: "https://example.com",
-    github: "https://github.com/johndoe/portfolio",
-    technologies: ["Next.js", "Tailwind", "Framer Motion", "TypeScript"],
-    category: "Website",
-    featured: false,
-  },
-  {
-    id: 6,
-    title: "Crypto Tracker",
-    description: "Cryptocurrency tracking application with real-time prices, charts, and portfolio management.",
-    image: "/api/placeholder/600/400",
-    demo: "https://example.com",
-    github: "https://github.com/johndoe/crypto",
-    technologies: ["React", "Chart.js", "CoinGecko API", "Redux"],
+    title: "StokQ - Aplikasi Manajemen Stok",
+    description: "Aplikasi full-stack untuk manajemen stok barang. Bagian backend mengelola logika bisnis dan database, sementara frontend menyediakan antarmuka pengguna yang interaktif.",
+    image: "/images/projects/stokq.png", 
+    demo: "#",
+    github: "https://github.com/adrianismu/StokQ-backend", 
+    technologies: ["Go", "Flutter", "PostgreSQL"], 
     category: "Web App",
     featured: false,
   },
   {
-    id: 7,
-    title: "Restaurant POS",
-    description: "Point of sale system for restaurants with order management, inventory tracking, and analytics.",
-    image: "/api/placeholder/600/400",
-    demo: "https://example.com",
-    github: "https://github.com/johndoe/pos",
-    technologies: ["React", "Node.js", "PostgreSQL", "Electron"],
-    category: "Desktop App",
-    featured: false,
+    id: 4,
+    title: "Pump Station Monitoring",
+    description: "Proyek untuk memonitor status dan data dari stasiun pompa air secara real-time. Sistem ini menyediakan dashboard interaktif untuk memantau performa dan kondisi operasional stasiun pompa.",
+    image: "/images/projects/pump-station.png",
+    demo: "#",
+    github: "https://github.com/adrianismu/pump-station",
+    technologies: ["Vue.js", "Laravel", "Shadcn"], 
+    category: "Dashboard",
+    featured: true,
   },
   {
-    id: 8,
-    title: "Fitness Tracker",
-    description: "Mobile fitness application with workout tracking, nutrition logging, and progress analytics.",
-    image: "/api/placeholder/600/400",
-    demo: "https://example.com",
-    github: "https://github.com/johndoe/fitness",
-    technologies: ["React Native", "SQLite", "HealthKit", "Firebase"],
-    category: "Mobile App",
+    id: 5,
+    title: "Cloud Computing Capstone (Bangkit)",
+    description: "Proyek akhir dari program Bangkit Academy, berfokus pada solusi berbasis cloud computing. Mengimplementasikan arsitektur cloud-native dengan layanan Google Cloud Platform untuk skalabilitas dan performa optimal.",
+    image: "/images/projects/cloud-capstone.webp", 
+    demo: "#",
+    github: "https://github.com/SkyAfra/Cloud-Computing",
+    technologies: ["Google Cloud", "Express.js", "TensorFlow.js"],
+    category: "Web App",
+    featured: true,
+  },
+  {
+    id: 6,
+    title: "Vehicle Rush Game",
+    description: "Sebuah game sederhana yang dibangun menggunakan Java dengan konsep object-oriented programming. Game ini menampilkan gameplay yang menarik dengan sistem kontrol kendaraan dan mekanisme game yang responsif.",
+    image: "/images/projects/vehicle-rush.png",
+    demo: "#",
+    github: "https://github.com/adrianismu/Vehicle-Rush",
+    technologies: ["Java"], 
+    category: "Desktop App",
     featured: false,
   },
 ];
@@ -102,13 +79,7 @@ const categories = ["All", "Featured", "Web App", "Mobile App", "Dashboard", "We
 
 export default function ProjectsSection() {
   const [selectedCategory, setSelectedCategory] = useState("Featured");
-  const [isDragging, setIsDragging] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [dragStart, setDragStart] = useState({ x: 0, scrollLeft: 0 });
-  const [momentum, setMomentum] = useState(0);
-  const animationRef = useRef<number | null>(null);
-  const lastMoveTimeRef = useRef(0);
-  const velocityRef = useRef(0);
 
   const filteredProjects = allProjects.filter(project => {
     if (selectedCategory === "All") return true;
@@ -116,141 +87,21 @@ export default function ProjectsSection() {
     return project.category === selectedCategory;
   });
 
-  // Cleanup animation frame on unmount
-  useEffect(() => {
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-    };
-  }, []);
-
-  // Smooth scroll with momentum
-  const applyMomentum = () => {
-    if (!scrollContainerRef.current || Math.abs(momentum) < 0.1) {
-      setMomentum(0);
-      return;
-    }
-
-    scrollContainerRef.current.scrollLeft += momentum;
-    setMomentum(momentum * 0.95); // Decay factor
-    animationRef.current = requestAnimationFrame(applyMomentum);
-  };
-
-  const handleMouseDown = (e: React.MouseEvent) => {
+  // Arrow navigation
+  const scrollLeftNav = () => {
     if (scrollContainerRef.current) {
-      setIsDragging(true);
-      setMomentum(0);
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-      setDragStart({
-        x: e.pageX,
-        scrollLeft: scrollContainerRef.current.scrollLeft,
-      });
-      lastMoveTimeRef.current = Date.now();
-      velocityRef.current = 0;
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (isDragging) {
-      setIsDragging(false);
-      setMomentum(velocityRef.current * 10); // Apply momentum
-      animationRef.current = requestAnimationFrame(applyMomentum);
-    }
-  };
-
-  const handleMouseUp = () => {
-    if (isDragging) {
-      setIsDragging(false);
-      setMomentum(velocityRef.current * 10); // Apply momentum
-      animationRef.current = requestAnimationFrame(applyMomentum);
-    }
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || !scrollContainerRef.current) return;
-    e.preventDefault();
-    
-    const currentTime = Date.now();
-    const deltaTime = currentTime - lastMoveTimeRef.current;
-    const x = e.pageX;
-    const deltaX = x - dragStart.x;
-    const newScrollLeft = dragStart.scrollLeft - deltaX;
-    
-    // Calculate velocity for momentum
-    if (deltaTime > 0) {
-      velocityRef.current = (scrollContainerRef.current.scrollLeft - newScrollLeft) / deltaTime;
-    }
-    
-    scrollContainerRef.current.scrollLeft = newScrollLeft;
-    lastMoveTimeRef.current = currentTime;
-  };
-
-  // Touch events for mobile
-  const handleTouchStart = (e: React.TouchEvent) => {
-    if (scrollContainerRef.current) {
-      setIsDragging(true);
-      setMomentum(0);
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-      setDragStart({
-        x: e.touches[0].pageX,
-        scrollLeft: scrollContainerRef.current.scrollLeft,
-      });
-      lastMoveTimeRef.current = Date.now();
-      velocityRef.current = 0;
-    }
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging || !scrollContainerRef.current) return;
-    e.preventDefault();
-    
-    const currentTime = Date.now();
-    const deltaTime = currentTime - lastMoveTimeRef.current;
-    const x = e.touches[0].pageX;
-    const deltaX = x - dragStart.x;
-    const newScrollLeft = dragStart.scrollLeft - deltaX;
-    
-    // Calculate velocity for momentum
-    if (deltaTime > 0) {
-      velocityRef.current = (scrollContainerRef.current.scrollLeft - newScrollLeft) / deltaTime;
-    }
-    
-    scrollContainerRef.current.scrollLeft = newScrollLeft;
-    lastMoveTimeRef.current = currentTime;
-  };
-
-  const handleTouchEnd = () => {
-    if (isDragging) {
-      setIsDragging(false);
-      setMomentum(velocityRef.current * 10); // Apply momentum
-      animationRef.current = requestAnimationFrame(applyMomentum);
-    }
-  };
-
-  // Arrow navigation functions
-  const scrollLeft = () => {
-    if (scrollContainerRef.current) {
-      const cardWidth = 360; // Width of each card + gap
-      const scrollAmount = cardWidth + 16; // Card width + gap
-      scrollContainerRef.current.scrollBy({ 
-        left: -scrollAmount, 
-        behavior: 'smooth' 
+      scrollContainerRef.current.scrollBy({
+        left: -450,
+        behavior: 'smooth'
       });
     }
   };
 
-  const scrollRight = () => {
+  const scrollRightNav = () => {
     if (scrollContainerRef.current) {
-      const cardWidth = 360; // Width of each card + gap
-      const scrollAmount = cardWidth + 16; // Card width + gap
-      scrollContainerRef.current.scrollBy({ 
-        left: scrollAmount, 
-        behavior: 'smooth' 
+      scrollContainerRef.current.scrollBy({
+        left: 450,
+        behavior: 'smooth'
       });
     }
   };
@@ -337,20 +188,11 @@ export default function ProjectsSection() {
             <motion.div 
               key={selectedCategory}
               ref={scrollContainerRef}
-              className={`flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth px-4 py-4 will-change-scroll ${
-                isDragging ? 'cursor-grabbing select-none' : 'cursor-grab'
-              }`}
+              className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth px-4 py-4"
               style={{
-                scrollBehavior: isDragging ? 'auto' : 'smooth',
+                scrollBehavior: 'smooth',
                 WebkitOverflowScrolling: 'touch',
               }}
-              onMouseDown={handleMouseDown}
-              onMouseLeave={handleMouseLeave}
-              onMouseUp={handleMouseUp}
-              onMouseMove={handleMouseMove}
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -367,14 +209,14 @@ export default function ProjectsSection() {
                     type: "spring",
                     stiffness: 100 
                   }}
-                  className="flex-shrink-0 w-[360px] h-[370px] p-2"
-                  style={{ minWidth: '360px', maxWidth: '360px' }}
+                  className="flex-shrink-0 w-[420px] h-[520px] p-2"
+                  style={{ minWidth: '420px', maxWidth: '420px', height: '470px' }}
                 >
                   <GlowingCard 
                     className="h-full w-full"
                     glowColor={project.featured ? "rgba(139, 92, 246, 0.5)" : "rgba(59, 130, 246, 0.3)"}
                   >
-                    <div className="group relative bg-gray-900/50 border border-gray-800 rounded-2xl overflow-hidden hover:border-gray-600 transition-all duration-300 h-full w-full">
+                    <div className="group relative bg-gray-900/50 border border-gray-800 rounded-2xl overflow-hidden hover:border-gray-600 transition-all duration-300 h-full w-full flex flex-col">
                       {/* Featured Badge */}
                       {project.featured && (
                         <div className="absolute top-4 right-4 z-10 bg-white text-black px-3 py-1 rounded-full text-xs font-medium">
@@ -383,34 +225,32 @@ export default function ProjectsSection() {
                       )}
 
                   {/* Project Image */}
-                  <div className="relative h-40 overflow-hidden">
+                  <div className="relative h-48 overflow-hidden flex-shrink-0">
                     <Image
                       src={project.image}
                       alt={project.title}
                       fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 420px"
+                      priority={index < 2}
+                      loading={index < 2 ? "eager" : "lazy"}
                       className="object-cover group-hover:scale-110 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
-                    
-                    {/* Evervault Effect Overlay */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <EvervaultCard text={project.title} className="h-full" />
-                    </div>
+                    <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-300" />
                   </div>
 
                   {/* Project Content */}
-                  <div className="p-4 flex flex-col justify-between" style={{ height: 'calc(100% - 160px)' }}>
-                    <div>
-                      <div className="flex items-start justify-between mb-2">
-                        <h3 className="text-lg font-bold text-white group-hover:text-gray-200 transition-colors line-clamp-2 flex-1">
+                  <div className="p-6 flex flex-col flex-1">
+                    <div className="flex-1">
+                      <div className="flex items-start justify-between mb-3">
+                        <h3 className="text-lg font-bold text-white group-hover:text-gray-200 transition-colors flex-1 line-clamp-1">
                           {project.title}
                         </h3>
-                        <span className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded-full whitespace-nowrap ml-2 flex-shrink-0">
+                        <span className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded-full whitespace-nowrap ml-3 flex-shrink-0">
                           {project.category}
                         </span>
                       </div>
                       
-                      <p className="text-gray-400 text-sm leading-relaxed mb-3 line-clamp-2">
+                      <p className="text-gray-400 text-sm leading-relaxed mb-4 line-clamp-2">
                         {project.description}
                       </p>
 
@@ -433,12 +273,12 @@ export default function ProjectsSection() {
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="flex gap-2 mt-auto">
+                    <div className="flex gap-2 mt-auto pt-4">
                       <motion.a
                         href={project.demo}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1 px-3 py-2 bg-white text-black rounded-lg font-medium hover:bg-gray-200 transition-colors duration-300 text-sm flex-1 justify-center"
+                        className="flex items-center gap-1 px-3 py-2 bg-white text-black rounded-lg font-medium hover:bg-gray-200 transition-colors duration-300 text-xs flex-1 justify-center"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
@@ -450,7 +290,7 @@ export default function ProjectsSection() {
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1 px-3 py-2 border border-gray-600 text-gray-300 rounded-lg hover:border-gray-500 hover:text-white transition-colors duration-300 text-sm flex-1 justify-center"
+                        className="flex items-center gap-1 px-3 py-2 border border-gray-600 text-gray-300 rounded-lg hover:border-gray-500 hover:text-white transition-colors duration-300 text-xs flex-1 justify-center"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
@@ -476,7 +316,7 @@ export default function ProjectsSection() {
           >
             {/* Left Arrow */}
             <motion.button
-              onClick={scrollLeft}
+              onClick={scrollLeftNav}
               className="p-3 rounded-full bg-gray-900/50 border border-gray-800 hover:border-gray-600 hover:bg-gray-800/50 transition-all duration-300 group"
               whileHover={{ scale: 1 }}
               whileTap={{ scale: 0.95 }}
@@ -486,7 +326,7 @@ export default function ProjectsSection() {
 
             {/* Center Indicator */}
             <div className="text-gray-500 text-sm flex items-center gap-2 px-4">
-              <span>Drag to scroll or use arrows</span>
+              <span>Use arrows to navigate</span>
               <div className="flex gap-1">
                 <div className="w-2 h-2 bg-gray-600 rounded-full animate-pulse"></div>
                 <div className="w-2 h-2 bg-gray-600 rounded-full animate-pulse delay-100"></div>
@@ -496,7 +336,7 @@ export default function ProjectsSection() {
 
             {/* Right Arrow */}
             <motion.button
-              onClick={scrollRight}
+              onClick={scrollRightNav}
               className="p-3 rounded-full bg-gray-900/50 border border-gray-800 hover:border-gray-600 hover:bg-gray-800/50 transition-all duration-300 group"
               whileHover={{ scale: 1 }}
               whileTap={{ scale: 0.95 }}

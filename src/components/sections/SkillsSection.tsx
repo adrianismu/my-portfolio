@@ -2,18 +2,23 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { 
-  SiReact, 
-  SiNextdotjs, 
-  SiTypescript, 
-  SiTailwindcss, 
+  SiDotnet, 
+  SiSharp, 
+  SiLaravel,
+  SiPhp,
   SiNodedotjs, 
-  SiPython, 
-  SiJavascript, 
-  SiGit, 
-  SiDocker, 
-  SiMongodb, 
+  SiExpress,
+  SiMysql,
   SiPostgresql, 
-  SiFirebase 
+  SiVuedotjs,
+  SiPython,
+  SiDocker,
+  SiGooglecloud,
+  SiGit, 
+  SiJavascript, 
+  SiTypescript,
+  SiGo,
+  SiNextdotjs
 } from "react-icons/si";
 import {
   Tooltip,
@@ -24,18 +29,23 @@ import {
 import { SparklesCore } from "@/components/ui/sparkles";
 
 const skills = [
-  { icon: SiReact, name: "React", color: "#61DAFB" },
-  { icon: SiNextdotjs, name: "Next.js", color: "#000000" },
-  { icon: SiTypescript, name: "TypeScript", color: "#3178C6" },
-  { icon: SiTailwindcss, name: "Tailwind CSS", color: "#06B6D4" },
+  { icon: SiDotnet, name: ".NET", color: "#512BD4" },
+  { icon: SiSharp, name: "C#", color: "#239120" },
+  { icon: SiLaravel, name: "Laravel", color: "#FF2D20" },
+  { icon: SiPhp, name: "PHP", color: "#777BB4" },
   { icon: SiNodedotjs, name: "Node.js", color: "#339933" },
-  { icon: SiPython, name: "Python", color: "#3776AB" },
+  { icon: SiNextdotjs, name: "Next.js", color: "#FFFFF" },
+  { icon: SiExpress, name: "Express.js", color: "#FFFFF" },
   { icon: SiJavascript, name: "JavaScript", color: "#F7DF1E" },
-  { icon: SiGit, name: "Git", color: "#F05032" },
-  { icon: SiDocker, name: "Docker", color: "#2496ED" },
-  { icon: SiMongodb, name: "MongoDB", color: "#47A248" },
+  { icon: SiTypescript, name: "TypeScript", color: "#3178C6" },
+  { icon: SiMysql, name: "MySQL", color: "#4479A1" },
   { icon: SiPostgresql, name: "PostgreSQL", color: "#4169E1" },
-  { icon: SiFirebase, name: "Firebase", color: "#FFCA28" },
+  { icon: SiVuedotjs, name: "Vue.js", color: "#4FC08D" },
+  { icon: SiPython, name: "Python", color: "#F7DF1E" },
+  { icon: SiDocker, name: "Docker", color: "#2496ED" },
+  { icon: SiGooglecloud, name: "Google Cloud", color: "#4285F4" },
+  { icon: SiGo, name: "Go", color: "#3178C6" },
+  { icon: SiGit, name: "Git", color: "#F05032" },
 ];
 
 export default function SkillsSection() {
@@ -108,11 +118,11 @@ export default function SkillsSection() {
                           style={{ 
                             filter: "grayscale(100%)",
                           }}
-                          onMouseEnter={(e) => {
+                          onMouseEnter={(e: React.MouseEvent<SVGElement>) => {
                             e.currentTarget.style.filter = "grayscale(0%)";
                             e.currentTarget.style.color = skill.color;
                           }}
-                          onMouseLeave={(e) => {
+                          onMouseLeave={(e: React.MouseEvent<SVGElement>) => {
                             e.currentTarget.style.filter = "grayscale(100%)";
                             e.currentTarget.style.color = "";
                           }}
